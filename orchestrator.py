@@ -109,7 +109,7 @@ class WiredOrchestrator:
         broker_status = {"status": "ONLINE", "mode": self.mode}
         market_state = {
             "max_trade_candidates": 20,
-            "max_watchlist": 50,
+            "max_watchlist": 500,
             "event_day": False,
             "vix": 20,
         }
@@ -374,7 +374,7 @@ class WiredOrchestrator:
 
 def main():
     orchestrator = WiredOrchestrator(mode="BACKTEST")
-    symbols = ["AAPL", "MSFT", "TSLA"]
+    WatchlistManager("storage/watchlist.json").load()
     portfolio_state = {"equity": 100000, "total_pnl": 0.0, "exposure": 0.0}
     try:
         orchestrator.run_cycle(symbols=symbols, portfolio_state=portfolio_state)
