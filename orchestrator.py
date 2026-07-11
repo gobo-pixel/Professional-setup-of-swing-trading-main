@@ -110,7 +110,7 @@ class WiredOrchestrator:
         broker_status = {"status": "ONLINE", "mode": self.mode}
         market_state = {
             "max_trade_candidates": 20,
-            "max_watchlist": 500,
+            "max_watchlist": 25
             "event_day": False,
             "vix": 20,
         }
