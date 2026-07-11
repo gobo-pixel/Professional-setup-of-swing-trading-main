@@ -66,7 +66,6 @@ class DataEngine:
             if isinstance(market.columns, pd.MultiIndex):
                 # Grab only the first level (e.g., 'Close' from ('Close', 'TICKER'))
                 market.columns = market.columns.get_level_values(0)
-            
             market.columns = market.columns.str.lower()
 
         fundamentals = self.fundamental_provider.fetch(symbol)
