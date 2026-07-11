@@ -21,6 +21,7 @@ from core.logger import get_logger
 
 # Fixed Package Internal Mapping Layer
 from data.data_engine import DataEngine
+from data.watchlist import WatchlistManager
 from features.feature_engineering import FeatureEngineeringEngine
 from market.market_regime import MarketRegimeEngine
 from strategy.buy_strategy import BuyStrategyEngine
@@ -374,10 +375,25 @@ class WiredOrchestrator:
 
 def main():
     orchestrator = WiredOrchestrator(mode="BACKTEST")
-    WatchlistManager("storage/watchlist.json").load()
-    portfolio_state = {"equity": 100000, "total_pnl": 0.0, "exposure": 0.0}
+
+    watchlist = WatchlistManager("storage/watchlist.json")
+    symbols = watchlist.load()
+
+    if not symbols:
+        logger.error("Watchlist is empty. No symbols available for scanning.")
+        return
+
+    portfolio_state = {
+        "equity": 100000,
+        "total_pnl": 0.0,
+        "exposure": 0.0,
+    }
+
     try:
-        orchestrator.run_cycle(symbols=symbols, portfolio_state=portfolio_state)
+        orchestrator.run_cycle(
+            symbols=symbols,
+            portfolio_state=portfolio_state,
+        )
     except KeyboardInterrupt:
         orchestrator.shutdown()
 
