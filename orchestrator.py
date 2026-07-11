@@ -111,14 +111,14 @@ class WiredOrchestrator:
         return self.context
 
     # ... (baaki methods: run_live, run_backtest, kill_switch, etc. wahi purane wale rakho)
-    # Maine space bachane ke liye baaki methods yahan skip kiye hain, 
+    # Maine space bachane ke liye baaki methods yahan skip kiye hain,
     # bas run_cycle mein maine update kar diya hai.
 
     # ==========================================================
     # MAIN SEQUENTIAL PIPELINE LOOP
     # ==========================================================
 
-    def run_cycle(
+    run_cycle_once()
         self, symbols: list[str], portfolio_state: Any
     ) -> OrchestratorContext:
         self.context.cycle_id += 1
