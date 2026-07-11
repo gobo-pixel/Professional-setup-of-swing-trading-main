@@ -54,7 +54,7 @@ class VolumeIndicators:
         mfm = ((df["close"] - df["low"]) - (df["high"] - df["close"])) / (
             (df["high"] - df["low"]).replace(0, pd.NA)
         )
-        mfv = mfm.fillna(0) * df["volume"]
+        mfv = mfm.fillna(0, downcast="infer") * df["volume"]
         df["cmf_20"] = (
             mfv.rolling(20, min_periods=20).sum()
             / df["volume"].rolling(20, min_periods=20).sum()
