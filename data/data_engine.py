@@ -61,6 +61,10 @@ class DataEngine:
             period=period,
         )
 
+        # FIX: Normalize column names to lowercase to prevent IndicatorError in scanner
+        if market is not None and not market.empty:
+            market.columns = market.columns.str.lower()
+
         fundamentals = self.fundamental_provider.fetch(symbol)
 
         news = self.news_provider.fetch(
