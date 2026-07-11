@@ -61,8 +61,12 @@ class DataEngine:
             period=period,
         )
 
-        # FIX: Normalize column names to lowercase to prevent IndicatorError in scanner
+        # FIX: Handle yfinance MultiIndex and normalize column names to lowercase
         if market is not None and not market.empty:
+            if isinstance(market.columns, pd.MultiIndex):
+                # Grab only the first level (e.g., 'Close' from ('Close', 'TICKER'))
+                market.columns = market.columns.get_level_values(0)
+            
             market.columns = market.columns.str.lower()
 
         fundamentals = self.fundamental_provider.fetch(symbol)
